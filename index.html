@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Uma cartinha para minha neneca 🍮</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+
+  background: repeating-linear-gradient(
+    180deg,
+    #FFF3DC 0px,
+    #FFF3DC 160px,
+    #DEB887 160px,
+    #DEB887 320px
+  );
+
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #8B5E3C;
+  overflow-x: hidden;
+}
+
+/* ================= MODO CARTA ================= */
+body.letter-mode {
+  align-items: flex-start;
+  padding: 40px 0;
+}
+
+/* ================= CORAÇÕES AO FUNDO ================= */
+.hearts {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.heart {
+  position: absolute;
+  bottom: -40px;
+  animation: floatUp linear infinite;
+  opacity: 0.35;
+}
+
+.heart::before {
+  content: "❤";
+  font-size: var(--size);
+  color: var(--color);
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120vh); }
+}
+
+/* ================= CONTAINER ================= */
+.wrapper {
+  width: 92%;
+  max-width: 560px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* ================= ENVELOPES ================= */
+.envelope-closed,
+.envelope {
+  background: #E3C28A;
+  border-radius: 20px;
+  padding: 26px;
+  border: 3px solid #8B5E3C;
+  box-shadow: 0 16px 30px rgba(0,0,0,0.22);
+}
+
+.envelope {
+  position: relative;
+  overflow: hidden;
+}
+
+/* TAMPA */
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #d4ae6f;
+  clip-path: polygon(0 0, 100% 0, 50% 55%);
+  transform-origin: top;
+  transition: transform 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;
+}
+
+.envelope.open::before {
+  transform: rotateX(180deg);
+}
+
+/* PAPEL */
+.letter {
+  background: #FFF6E8;
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 10px;
+  transform: translateY(40%);
+  transition: transform 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px dashed #DEB887;
+}
+
+.envelope.open .letter {
+  transform: translateY(0);
+}
+
+/* TEXTO */
+.letter p {
+  font-size: 1.08em;
+  line-height: 1.65;
+}
+
+.letter strong {
+  font-size: 1.28em;
+  color: #8B5E3C;
+}
+
+/* TE AMO COM ANIMAÇÃO */
+.big-love {
+  font-size: 2.4em;
+  font-weight: bold;
+  color: #8B5E3C;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 0 #DEB887;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.15); }
+}
+
+/* IMAGENS */
+img {
+  max-width: 100%;
+  border-radius: 14px;
+}
+
+/* FOTO */
+.photo img {
+  border: 4px solid #DEB887;
+  margin-top: 16px;
+}
+
+/* BOTÕES */
+button {
+  margin: 16px 8px;
+  padding: 14px 30px;
+  border-radius: 999px;
+  border: 2px solid #8B5E3C;
+  background: #DEB887;
+  color: #8B5E3C;
+  font-size: 1.05em;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 0 #b99863;
+  transition: 0.2s;
+}
+
+button:hover { transform: translateY(-2px); }
+button:active { transform: translateY(2px); box-shadow: 0 4px 0 #b99863; }
+
+.hidden { display: none; }
+</style>
+</head>
+
+<body>
+
+<!-- CORAÇÕES -->
+<div class="hearts" id="hearts-container"></div>
+
+<div class="wrapper">
+
+  <!-- INÍCIO (CENTRALIZADO) -->
+  <div id="screen-start" class="envelope-closed">
+    <img src="img/carta.gif">
+    <p><strong>Tenho uma cartinha pra você 🍮</strong></p>
+    <p>Quer abrir?</p>
+    <button onclick="openLetter()">Simmmm</button>
+    <button onclick="reject()">Sou chata</button>
+  </div>
+
+  <!-- TRISTE -->
+  <div id="screen-sad" class="hidden envelope-closed">
+    <img src="img/sad.gif">
+    <p><strong>Awn… o Pompompurin ficou tristinho 🥺</strong></p>
+    <button onclick="goBack()">Tentar novamente…</button>
+  </div>
+
+  <!-- CARTA -->
+  <div id="screen-letter" class="hidden">
+    <div class="envelope" id="envelope">
+      <div class="letter">
+        <img src="img/happy.gif">
+
+        <p><strong>Feliz Ano Novo, minha princesa!</strong></p>
+        <p>Que esse novo ano seja doce, leve e alegre, assim como você.</p>
+        <p>Você apareceu num momento da minha vida em que eu nem me lembrava como era ser feliz.</p>
+        <p>Você me faz sentir coisas nas quais eu não me permitia.</p>
+        <p>Você me faz dar sorrisos bobos independente do lugar e circunstância.</p>
+        <p>Você faz com que eu me sinta perfeito com minhas imperfeições.</p>
+        <p>Você me faz feliz do momento em que acordo até o meus olhos fecharem.</p>
+        <center><p><strong>VOCÊ.</strong></p></center>
+
+        <button onclick="goToUs()">NÓS 💛</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NÓS -->
+  <div id="screen-us" class="hidden envelope-closed">
+    <p class="big-love">𝓣𝓔 𝓐𝓜𝓞 💛</p>
+    <div class="photo">
+      <img src="img/nossa-foto.png">
+    </div>
+    <button onclick="restart()">Voltar ao início 🍮</button>
+  </div>
+
+</div>
+
+<script>
+function openLetter() {
+  document.body.classList.add('letter-mode');
+  screenStart().classList.add('hidden');
+  screenLetter().classList.remove('hidden');
+
+  setTimeout(() => {
+    document.getElementById('envelope').classList.add('open');
+  }, 500);
+}
+
+function reject() {
+  screenStart().classList.add('hidden');
+  screenSad().classList.remove('hidden');
+}
+
+function goBack() {
+  screenSad().classList.add('hidden');
+  screenStart().classList.remove('hidden');
+}
+
+function goToUs() {
+  screenLetter().classList.add('hidden');
+  document.getElementById('screen-us').classList.remove('hidden');
+}
+
+function restart() {
+  document.body.classList.remove('letter-mode');
+  screenLetter().classList.add('hidden');
+  document.getElementById('screen-us').classList.add('hidden');
+  screenStart().classList.remove('hidden');
+  document.getElementById('envelope').classList.remove('open');
+}
+
+function screenStart(){ return document.getElementById('screen-start'); }
+function screenSad(){ return document.getElementById('screen-sad'); }
+function screenLetter(){ return document.getElementById('screen-letter'); }
+
+/* ================= GERAR CORAÇÕES CONTÍNUOS ================= */
+const heartsContainer = document.getElementById('hearts-container');
+
+function createHeart() {
+  const heart = document.createElement('span');
+  heart.className = 'heart';
+  const size = Math.random() * 22 + 12; // tamanho entre 12 e 34px
+  heart.style.setProperty('--size', size + 'px');
+  heart.style.setProperty('--color', '#C97C5D');
+  heart.style.left = Math.random() * 100 + '%';
+  heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+  heartsContainer.appendChild(heart);
+
+  // Remove depois de terminar animação
+  setTimeout(() => heartsContainer.removeChild(heart), (parseFloat(heart.style.animationDuration) * 1000));
+}
+
+// Criar novos corações a cada 300ms
+setInterval(createHeart, 300);
+</script>
+
+</body>
+</html>
